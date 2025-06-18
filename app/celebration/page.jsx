@@ -16,10 +16,8 @@ export default function Celebration() {
   const [showConfettiBurst, setShowConfettiBurst] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
-
   const audioRef = useRef(null);
   const answerRef = useRef(null);
-  const imgRef = useRef(null); // 🔹 added for scroll fix
 
   const photos = [
     'photos/photo1.jpg', 'photos/photo2.jpg', 'photos/photo3.jpg',
@@ -87,13 +85,6 @@ export default function Celebration() {
       answerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [showAnswer]);
-
-  // 🔹 Scroll into view when imageIndex changes
-  useEffect(() => {
-    if (imgRef.current) {
-      imgRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [imageIndex]);
 
   return (
     <main className="min-h-screen bg-pink-50 py-10 px-4 text-gray-800 relative overflow-x-hidden">
@@ -177,7 +168,6 @@ export default function Celebration() {
             Looks whose b'day is today... ohh this cutieee 😍
           </motion.h2>
           <motion.img
-            ref={imgRef} // 🔹 ref for scrolling into view
             key={photos[imageIndex]}
             src={photos[imageIndex]}
             alt="Memories"
@@ -210,7 +200,7 @@ export default function Celebration() {
         </motion.div>
       )}
 
-      {/* Cake Cutting Section */}
+      {/* Cake Cutting Section – only after all photos seen */}
       {showFinalMessage && (
         <div className="mt-20 text-center">
           <h3 className="text-2xl font-bold mb-4">🎂 Ready to cut the cake?</h3>
