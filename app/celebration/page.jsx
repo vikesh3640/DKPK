@@ -16,8 +16,10 @@ export default function Celebration() {
   const [showConfettiBurst, setShowConfettiBurst] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
+
   const audioRef = useRef(null);
   const answerRef = useRef(null);
+  const photoRef = useRef(null);
 
   const photos = [
     'photos/photo1.jpg', 'photos/photo2.jpg', 'photos/photo3.jpg',
@@ -68,6 +70,10 @@ export default function Celebration() {
     } else {
       setShowFinalMessage(true);
     }
+
+    setTimeout(() => {
+      photoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   useEffect(() => {
@@ -156,9 +162,9 @@ export default function Celebration() {
         </div>
       )}
 
-      {/* Photo Slider with Heading */}
+      {/* Photo Slider */}
       {showCard && showPhotos && !showFinalMessage && (
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center" ref={photoRef}>
           <motion.h2
             className="text-3xl font-bold text-pink-700 mb-6"
             initial={{ opacity: 0, y: -20 }}
@@ -171,7 +177,7 @@ export default function Celebration() {
             key={photos[imageIndex]}
             src={photos[imageIndex]}
             alt="Memories"
-            className="mx-auto rounded-xl shadow-xl max-h-[400px] object-cover"
+            className="mx-auto rounded-xl shadow-xl w-full max-w-md h-auto object-contain sm:max-h-[500px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -184,7 +190,7 @@ export default function Celebration() {
         </div>
       )}
 
-      {/* Final Message after all photos */}
+      {/* Final Message */}
       {showFinalMessage && (
         <motion.div
           className="mt-16 text-center max-w-2xl mx-auto p-6 bg-purple-100 rounded-2xl shadow-lg"
@@ -200,7 +206,7 @@ export default function Celebration() {
         </motion.div>
       )}
 
-      {/* Cake Cutting Section – only after all photos seen */}
+      {/* Cake Cutting */}
       {showFinalMessage && (
         <div className="mt-20 text-center">
           <h3 className="text-2xl font-bold mb-4">🎂 Ready to cut the cake?</h3>
